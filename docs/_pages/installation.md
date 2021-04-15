@@ -464,11 +464,60 @@ roslaunch rplidar_ros view_rplidar.launch
 
 Once you have generic and specific infrastructure installed in your system, you can download and install the JdeRobot Academy software.
 
-1. Clone the Academy software repository
+1. Clone the Academy software repository.
 
     ```bash
     git clone https://github.com/JdeRobot/Academy.git
     ```
+
+## Docker installation
+1. Clone the [RoboticsAcademy](https://github.com/JdeRobot/RoboticsAcademy) repository.
+    ```bash
+    git clone https://github.com/JdeRobot/Academy.git
+    ```
+2. Run the docker container.
+    ```bash
+    docker run -it --name=docker_academy -p 2303:2303 -p 1905:1905 jderobot/web-templates:follow_line
+    ```
+3. Once inside de container bash run.
+    ```bash
+    cd follow_line
+    . screen.sh
+    ```
+4. Then, launch the headless simulation of the exercise (Inside the docker bash).
+    ```bash
+    roslaunch ./launch/simple_line_follower_ros.launch
+    ```
+5. The last instruction runs a process that must not be stopped. To carry out the last step we need to open the container bash in another terminal window.
+    ```bash
+    docker exec -it docker_academy bash
+    ```
+6. Lastly, to complete the docker setup we must run host.py inside the docker.
+    ```bash
+    cd follow_line
+    python host.py 0.0.0.0
+    ```
+7. The last instruction will run indefinetly too. Now we go to our local machine (where we have cloned the RoboticsAcademy repository). We need to navigate to RoboticsAcademy/exercises/follow_line/web-templates.
+
+8. Inside assets\websocket_address.js we need to change the variable websocket_address to the IP where our docker container is running. To check the ip:
+    ```bash
+    docker inspect robotics_academy
+    ```
+    If you are running Docker Desktop in Windows, the IP will usually be "localhost".
+    
+9. Launch the index.html web-page with any browser.
+
+10. If while running the exercise you only get a black screen you need to stop the container and start it again (docker container start docker_academy). Instead of carrying out steps 4 and 6 run the following instructions first.
+    ```bash
+    docker exec -it docker_academy bash
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+    apt-get update && sudo apt-get install -y nvidia-container-toolkit
+    apt-get install xvfb
+    Xvfb :1 -screen 0 1600x1200x16 & export Display=:1.0
+    ```
+    Then run everything from step 4 to step 9.
 
 <!---
 

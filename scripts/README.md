@@ -26,7 +26,7 @@ First you need to build the image. Then, you need to run a container.
 git clone https://github.com/JdeRobot/RoboticsAcademy.git
 cd scripts
 docker build -t image-name .
-docker run -it --name=container_name -p 8080:8080 -p 7681:7681 -p 2303:2303 -p 1905:1905 -p 8765:8765 -p 6080:6080 jderobot/robotics-academy python3.8 manager.py
+docker run -it --name=container_name -p 8080:8080 -p 7681:7681 -p 2303:2303 -p 1905:1905 -p 8765:8765 -p 6080:6080 -p 1108:1108 jderobot/robotics-academy python3.8 manager.py
 ```
 
 ## Manager Script

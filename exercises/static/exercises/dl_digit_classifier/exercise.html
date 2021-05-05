@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DL Digit Classifier</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/gui.css">
+    <link rel="stylesheet" href="assets/console.css">
+    <link rel="stylesheet" href="assets/split_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+
+<body>
+<!-- Navigation Bar -->
+<nav class="navigation-bar">
+    <img class="logo" src="assets/img/logo.jpg" align="left">
+    <div class="header">
+        <p>Robotics Academy by JdeRobot</p>
+    </div>
+</nav>
+<div class="content">
+
+    <div class="split a">
+        <div id="Control" class="container">
+            <button id="submit" type="button" onclick="submitModel()"><img src="./assets/img/submit.png"> Play</button>
+            <button id="stop" type="button" onclick="stopInference()"><img src="./assets/img/pause.png"> Stop</button>
+        </div>
+
+        <li id="frecuency_control" style="list-style: none; display:block; text-align:center; font-weight:bold;">
+            <div id="Frequency" class="container">
+                <!-- Source http://thenewcode.com/757/Playing-With-The-HTML5-range-Slider-Input -->
+                <table>
+                    <tr><strong>
+                        <th>Name</th>
+                        <th>Slider</th>
+                        <th>Frequency Measure</th>
+                    </strong>
+                    </tr>
+                    <tr>
+                        <td>Brain</td>
+                        <td><input type="range" min="1" max="30" value="12.5" id="fader"
+                                   step="0.1" oninput="codefrequencyUpdate(value)" class="frequency-slider"></td>
+                        <td>
+                            <output id="ideal_code_frequency">0</output>
+                            /
+                            <output for="fader" id="code_frequency">12.5</output>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>GUI</td>
+                        <td><input type="range" min="1" max="30" value="12" id="fader"
+                                   step="0.5" oninput="guifrequencyUpdate(value)" class="frequency-slider"></td>
+                        <td>
+                            <output id="ideal_gui_frequency">0</output>
+                            /
+                            <output for="fader" id="gui_frequency">12.5</output>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Debug-Level</th>
+                        <td><input id="slide" type="range" min="1" max="4" steps="1" value="2" name="debug"
+                                   class="debug-slider">
+                            <ul class="debug-labels">
+                        <th><p id="slidernum">2</p>
+                            <script type="text/javascript">
+                                var slide = document.getElementById('slide'),
+                                    sliderDiv = document.getElementById("slidernum");
+
+                                slide.onchange = function () {
+                                    sliderDiv.innerHTML = this.value;
+                                }
+                            </script>
+                            </ul>
+
+                        </td>
+                        </th>
+                    </tr>
+
+                </table>
+            </div>
+        </li>
+
+
+        <div id="code-control">
+            <!-- Button for selecting DL model -->
+            <div id="file_selector">
+                <input type="file" id="dl_model" name="dl_model" accept=".onnx">
+            </div>
+        </div>
+
+    </div>
+    <div class="split b">
+
+        <div id="visual_buttons" class="row no-gutters">
+            <button id="console_btn" type="button" onclick="changeconsole()"><img id="terminalimg"
+                                                                                  src="./assets/img/terminal-solid.svg">
+                Console
+            </button>
+
+        </div>
+
+        <div id="visual">
+            <!-- Canvas -->
+            <h3 style="text-align:center" id="output_heading">Detected Digit: -</h3>
+            <canvas id="gui_canvas"></canvas>
+        </div>
+
+        <div id="console" style="display:none;">
+            <!-- Console -->
+            <div id="Console" class="container">
+                <ul>
+                    <li class="Console-item">
+                        <input value=">>" class="terminal" readonly><input class="command">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            function changeconsole() {
+                var console_display = document.getElementById('console').style.display
+                console.log(console_display)
+                if (console_display == "none" || console_display == "none") {
+                    document.getElementById('console').style.display = 'block';
+                } else {
+                    document.getElementById('console').style.display = 'none';
+                }
+            }
+
+        </script>
+    </div>
+</div>
+<script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+<script>
+    Split(['.a', '.b'], {
+        gutterSize: 3,
+        sizes: [50, 50]
+    });
+</script>
+</body>
+<script src='https://huningxin.github.io/opencv.js/build/asm.js/opencv.js' async></script>
+<script src="assets/websocket_address.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/launcher.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/ws_code.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/ws_gui.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/console.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

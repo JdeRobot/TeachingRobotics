@@ -7,7 +7,7 @@
 
     <include file="$(find drone_wrapper)/launch/mavros_px4_sitl.launch">
         <arg name="world" value="$(arg world)"/>
-        <arg name="x" value="8"/>
+        <arg name="x" value="14.96"/>
         <arg name="z" value="0.3"/>
         <arg name="Y" value="1.57"/>
 		<!-- <arg name="config" value="$(arg iris_config)"/> --> <!-- LOCAL IRIS SETTING -->
